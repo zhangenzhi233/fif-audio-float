@@ -1,0 +1,33 @@
+# Build output and IDE state
+bin/
+obj/
+.vs/
+*.user
+*.suo
+
+# User recordings and their mutable local metadata
+录音/
+*.wav
+*.wav.part
+录音列表.json
+录音列表.json.bak
+
+# Local/private material, handoffs, reports, and device snapshots
+private/
+handoff*/
+*handoff*
+验证结果/
+*.json
+*.json.bak
+test_*/
+test_*.json
+*device*.json
+*devices*.json
+*probe*.json
+*report*.json
+*.log
+*.bak
+
+# Archives and local screenshots other than the deliberately included composite example
+*.zip
+docs/*.layout.json

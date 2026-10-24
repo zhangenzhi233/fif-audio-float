@@ -1,3 +1,5 @@
 * text=auto
 *.png binary
 *.dll binary
+# Retain the third-party license text exactly as distributed upstream.
+licenses/NAudio-MsPL.txt -whitespace

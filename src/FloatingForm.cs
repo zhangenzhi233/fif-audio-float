@@ -41,6 +41,7 @@ namespace FifFloat
         private readonly Panel _libraryPanel;
         private readonly FlowLayoutPanel _clipRows;
         private readonly Label _libraryCaption;
+        private readonly Panel _authorPanel;
 
         private bool _busy;
         private bool _settingsVisible;
@@ -63,10 +64,10 @@ namespace FifFloat
             _engine = new AudioEngine();
             _library = new RecordingLibrary(_engine.DataDirectory);
             Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            Text = "FIF 录音小窗 · 多录音版";
+            Text = "FIF 录音小窗 · " + Program.Author;
             TopMost = true;
             StartPosition = FormStartPosition.CenterScreen;
-            ClientSize = new Size(430, 610);
+            ClientSize = new Size(430, 660);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             BackColor = Color.FromArgb(246, 249, 253);
@@ -256,6 +257,24 @@ namespace FifFloat
             _clipRows.WrapContents = false;
             _clipRows.Padding = new Padding(2);
             _libraryPanel.Controls.Add(_clipRows);
+
+            _authorPanel = new Panel();
+            _authorPanel.Dock = DockStyle.Bottom;
+            _authorPanel.Height = 50;
+            _authorPanel.BackColor = Color.FromArgb(232, 240, 250);
+            Controls.Add(_authorPanel);
+            LinkLabel author = new LinkLabel();
+            author.Text = "作者：" + Program.Author + " · @zhangenzhi233";
+            author.LinkColor = Color.FromArgb(35, 93, 162);
+            author.Location = new Point(21, 4);
+            author.Size = new Size(388, 21);
+            author.LinkClicked += delegate { InstallClicked(null, EventArgs.Empty); };
+            _toolTip.SetToolTip(author, "查看作者、问题反馈邮箱、项目地址和使用说明");
+            _authorPanel.Controls.Add(author);
+            Label affiliation = MakeLabel(Program.Affiliation, 8.5F, FontStyle.Regular, Color.FromArgb(76, 88, 105));
+            affiliation.Location = new Point(21, 26);
+            affiliation.Size = new Size(388, 21);
+            _authorPanel.Controls.Add(affiliation);
 
             _timer = new Timer();
             _timer.Interval = 150;
@@ -689,11 +708,73 @@ namespace FifFloat
 
         private void InstallClicked(object sender, EventArgs e)
         {
+            using (Form about = CreateAboutDialog()) about.ShowDialog(this);
+        }
+
+        private Form CreateAboutDialog()
+        {
+            Form dialog = new Form();
+            dialog.Text = "关于 FIF 录音悬浮窗";
+            dialog.Font = Font;
+            dialog.ClientSize = new Size(430, 290);
+            dialog.FormBorderStyle = FormBorderStyle.FixedDialog;
+            dialog.StartPosition = FormStartPosition.CenterParent;
+            dialog.MaximizeBox = false;
+            dialog.MinimizeBox = false;
+            dialog.ShowInTaskbar = false;
+            Label details = MakeLabel("FIF Audio Float  v" + Program.DisplayVersion + "\r\n\r\n作者：" + Program.Author +
+                "（@zhangenzhi233）\r\n" + Program.Affiliation + "\r\n\r\n问题反馈：" + Program.FeedbackEmail,
+                9F, FontStyle.Regular, Color.FromArgb(31, 54, 83));
+            details.Location = new Point(18, 16);
+            details.Size = new Size(394, 139);
+            dialog.Controls.Add(details);
+            LinkLabel project = new LinkLabel();
+            project.Text = Program.ProjectUrl;
+            project.Location = new Point(18, 160);
+            project.Size = new Size(394, 25);
+            project.LinkClicked += delegate
+            {
+                try { Process.Start(Program.ProjectUrl); }
+                catch (Exception ex) { ShowError(ex); }
+            };
+            dialog.Controls.Add(project);
+            Label license = MakeLabel("Copyright © 2026 张恩智 · MIT\r\nNAudio 1.10.0 · Ms-PL", 8.5F, FontStyle.Regular, Color.FromArgb(76, 88, 105));
+            license.Location = new Point(18, 190);
+            license.Size = new Size(394, 40);
+            dialog.Controls.Add(license);
+            Button instructions = MakeButton("使用说明", Color.FromArgb(73, 109, 150));
+            instructions.Location = new Point(18, 244);
+            instructions.Size = new Size(100, 30);
+            instructions.Click += delegate { OpenInstructions(); };
+            dialog.Controls.Add(instructions);
+            Button copyEmail = MakeButton("复制反馈邮箱", Color.FromArgb(73, 109, 150));
+            copyEmail.Location = new Point(126, 244);
+            copyEmail.Size = new Size(148, 30);
+            copyEmail.Click += delegate
+            {
+                try { Clipboard.SetText(Program.FeedbackEmail); copyEmail.Text = "邮箱已复制"; }
+                catch (Exception ex) { ShowError(ex); }
+            };
+            dialog.Controls.Add(copyEmail);
+            Button close = MakeButton("关闭", Color.FromArgb(91, 105, 126));
+            close.Location = new Point(300, 244);
+            close.Size = new Size(112, 30);
+            close.DialogResult = DialogResult.Cancel;
+            dialog.Controls.Add(close);
+            dialog.AcceptButton = close;
+            dialog.CancelButton = close;
+            dialog.AutoScaleDimensions = new SizeF(96F, 96F);
+            dialog.AutoScaleMode = AutoScaleMode.Dpi;
+            return dialog;
+        }
+
+        private void OpenInstructions()
+        {
             try
             {
                 string readme = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "README.md");
                 if (File.Exists(readme)) Process.Start("notepad.exe", "\"" + readme + "\"");
-                else Process.Start("https://vb-audio.com/Cable/");
+                else Process.Start(Program.ProjectUrl);
             }
             catch (Exception ex) { ShowError(ex); }
         }
@@ -836,12 +917,12 @@ namespace FifFloat
             _libraryPanel.Location = ScalePoint(18, panelY, scale);
             _libraryPanel.Size = ScaleSize(394, panelHeight, scale);
 
-            int desiredClientHeight = (int)Math.Ceiling((_settingsVisible ? 685 : 610) * scale);
+            int desiredClientHeight = (int)Math.Ceiling((_settingsVisible ? 735 : 660) * scale);
             int chromeHeight = Height - ClientSize.Height;
             int availableClientHeight = Screen.FromControl(this).WorkingArea.Height - chromeHeight - 16;
             ClientSize = new Size((int)Math.Round(430 * scale), Math.Max(360, Math.Min(desiredClientHeight, availableClientHeight)));
 
-            int availableListHeight = ClientSize.Height - _libraryPanel.Top - (int)Math.Ceiling(12 * scale);
+            int availableListHeight = ClientSize.Height - _authorPanel.Height - _libraryPanel.Top - (int)Math.Ceiling(12 * scale);
             int twoRows = (int)Math.Ceiling(84 * scale);
             if (availableListHeight >= twoRows) _libraryPanel.Height = Math.Min(_libraryPanel.Height, availableListHeight);
             else _libraryPanel.Height = Math.Max(20, availableListHeight);

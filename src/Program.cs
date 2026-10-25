@@ -9,13 +9,24 @@ using System.Windows.Forms;
 using NAudio.Wave;
 using NAudio.CoreAudioApi;
 
-[assembly: System.Reflection.AssemblyVersion("1.3.0.0")]
-[assembly: System.Reflection.AssemblyFileVersion("1.3.0.0")]
+[assembly: System.Reflection.AssemblyVersion("1.3.1.0")]
+[assembly: System.Reflection.AssemblyFileVersion("1.3.1.0")]
+[assembly: System.Reflection.AssemblyTitle("FIF 录音悬浮窗")]
+[assembly: System.Reflection.AssemblyProduct("FIF Audio Float")]
+[assembly: System.Reflection.AssemblyCompany("张恩智（重庆邮电大学 · 人工智能学院）")]
+[assembly: System.Reflection.AssemblyCopyright("Copyright © 2026 张恩智 (zhangenzhi233)")]
+[assembly: System.Reflection.AssemblyDescription("作者：张恩智；重庆邮电大学 · 人工智能学院；问题反馈：3487534331@qq.com；https://github.com/zhangenzhi233/fif-audio-float")]
 
 namespace FifFloat
 {
     internal static class Program
     {
+        internal const string DisplayVersion = "1.3.1";
+        internal const string Author = "张恩智";
+        internal const string Affiliation = "重庆邮电大学 · 人工智能学院";
+        internal const string FeedbackEmail = "3487534331@qq.com";
+        internal const string ProjectUrl = "https://github.com/zhangenzhi233/fif-audio-float";
+
         internal static void WriteJson(string path, object value)
         {
             File.WriteAllText(path, new JavaScriptSerializer().Serialize(value), new UTF8Encoding(false));

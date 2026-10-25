@@ -1,6 +1,12 @@
 # FIF Audio Float / FIF 录音悬浮窗
 
-**v1.3.0**
+**v1.3.1**
+
+**作者：张恩智（[@zhangenzhi233](https://github.com/zhangenzhi233)）**
+
+重庆邮电大学 · 人工智能学院
+
+问题反馈：[3487534331@qq.com](mailto:3487534331@qq.com)
 
 FIF Audio Float（FIF 录音悬浮窗）是面向 Windows x64 的本地 WinForms 小工具：录制电脑声音或麦克风、管理多条 WAV，并通过 VB-CABLE 把选中的一条作为网页麦克风输入播放。
 
@@ -11,6 +17,7 @@ FIF Audio Float（FIF 录音悬浮窗）是面向 Windows x64 的本地 WinForms
 - **批量导入**：支持 16 位 PCM WAV，单声道或双声道，8–96 kHz，单个文件最大 120 MB。
 - **逐条播放**：把列表中的某一条固定送往 `CABLE Input`；本地试听则送往真实耳机或扬声器。
 - **本地管理**：改名、试听、直接删除、右键移出列表。默认编号会自动补齐，自定义名称保留。
+- **作者与反馈信息**：主窗口常驻显示作者姓名和学校、学院；点击署名或“设备与设置 → 说明”，可查看版本、反馈邮箱、项目地址和使用说明。
 - **明确边界**：不操作 FIF 网页，不提交录音，也不参与评分；网页录音的开始、结束、回放和提交均由使用者自己完成。
 
 ![FIF 录音悬浮窗合成示例界面](docs/界面预览-合成示例.png)
@@ -25,9 +32,11 @@ FIF Audio Float（FIF 录音悬浮窗）是面向 Windows x64 的本地 WinForms
 
 ## 下载与安装
 
-打开 [GitHub Releases](https://github.com/zhangenzhi233/fif-audio-float/releases/latest)，下载最新 Windows x64 发布包。本说明对应 **v1.3.0**。
+打开 [GitHub Releases](https://github.com/zhangenzhi233/fif-audio-float/releases/latest)，下载最新 Windows x64 发布包。本说明对应 **v1.3.1**。
 
 下载后解压到一个当前用户可写的普通文件夹，运行 `FifFloat.exe`。解压后的程序日常使用不需要管理员权限，也不要把程序放在需要管理权限才能写入的位置。
+
+从旧版升级时，先关闭旧程序，再把新版压缩包解压到原程序目录并替换同名程序文件，保留原有的 `录音/` 文件夹即可继续使用已有列表；无需重新安装 VB-CABLE。
 
 | 项目 | 要求 |
 | --- | --- |
@@ -155,6 +164,15 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\build.ps1
 根据用户反馈，v1.3.0 已在一台 Windows 虚拟机中安装成功；该反馈仅覆盖安装环节。虚拟机中的实际 FIF 网页收音、回放质量和评分尚未验证，本说明不将其表述为已通过。
 
 在目标机器和实际页面开始使用前，建议按 [虚拟机迁移与恢复](docs/虚拟机迁移与恢复.md) 做一次不含隐私内容的短录音验收。安装成功不等于音频路由、浏览器权限和评分流程都已验证。
+
+## 作者与问题反馈
+
+- 作者：**张恩智**（GitHub：[@zhangenzhi233](https://github.com/zhangenzhi233)）。
+- 学校、学院：**重庆邮电大学 · 人工智能学院**。
+- 反馈邮箱：[3487534331@qq.com](mailto:3487534331@qq.com)；也可在 [GitHub Issues](https://github.com/zhangenzhi233/fif-audio-float/issues) 反馈。
+- 反馈时请说明程序版本、Windows 版本、操作步骤和错误提示；发送截图前请遮住私人录音和账号信息。
+
+主窗口署名、“关于/说明”和可执行文件属性均包含作者信息。“关于/说明”内可点击“复制反馈邮箱”。学校、学院是作者介绍，本项目为个人项目。
 
 ## 许可证
 

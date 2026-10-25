@@ -1,4 +1,6 @@
-# FIF Audio Float / FIF 录音悬浮窗
+# FIF 口语录音助手：利用音频回环，实现不外放手动点播
+
+录制电脑声音或麦克风，管理多条录音，点击指定条目即可通过虚拟麦克风播放给 FIF，全程手动操作。
 
 **v1.3.1**
 
@@ -8,7 +10,7 @@
 
 问题反馈：[3487534331@qq.com](mailto:3487534331@qq.com)
 
-FIF Audio Float（FIF 录音悬浮窗）是面向 Windows x64 的本地 WinForms 小工具：录制电脑声音或麦克风、管理多条 WAV，并通过 VB-CABLE 把选中的一条作为网页麦克风输入播放。
+FIF Audio Float（FIF 录音悬浮窗）是面向 Windows x64 的本地 WinForms 小工具，通过 VB-CABLE 把选中的 WAV 录音作为网页麦克风输入播放。
 
 ## 功能
 
